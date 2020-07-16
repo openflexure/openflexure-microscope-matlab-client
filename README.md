@@ -13,20 +13,20 @@ To connect to your microscope, you can either:
 * Use `microscope.local`.  
   
     ```matlab
-    microscope = MicroscopeClient('microscope.local');
+    microscope = OFMClient('microscope.local');
     ```
 
 * Use the microscope's **hostname** or **IP address**.  
   
     ```matlab
-    microscope = MicroscopeClient('example.host.name');
-    microscope = MicroscopeClient('XXX.XXX.XXX.XXX');
+    microscope = OFMClient('example.host.name');
+    microscope = OFMClient('XXX.XXX.XXX.XXX');
     ```  
 
 If necessary you can also set the port (default is `5000`):  
 
 ```matlab
-microscope = MicroscopeClient('example.host.name','port');
+microscope = OFMClient('example.host.name','port');
 ```
 
 ## Check the connection
