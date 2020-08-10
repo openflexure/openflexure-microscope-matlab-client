@@ -1,3 +1,8 @@
 function outputArg = task_href(task)
-    outputArg = task.links.self.href;
+    %task_href Return the href of the task.
+    try
+        outputArg = task.links.self.href;
+    catch
+        outputArg  = '';
+    end
 end
