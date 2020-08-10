@@ -1,15 +1,20 @@
 classdef MicroscopeExtension <dynamicprops
     %MicroscopeExtension A class that represents a microscope extension.
-    %   Detailed explanation goes here
-    
+    %   
+    %MicroscopeExtension Properties:
+    %   extension_struct  - A struct containing the RequestableURIs for a microscope extension.
+    %
+    %MicroscopeExtension Methods:
+    %
+    % See also RequestableURI.
     properties (SetAccess = protected)
-        extension_struct
+        extension_struct %A struct containing the RequestableURIs for a microscope extension.
     end
     
     methods
         function obj = MicroscopeExtension(extension_struct)
-            %UNTITLED4 Construct an instance of this class
-            %   Detailed explanation goes here
+            %MicroscopeExtension Construct an instance of this class
+            % 
             obj.extension_struct = extension_struct;
             fn = fieldnames(extension_struct.links);
             for i = 1: numel(fn)

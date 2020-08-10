@@ -1,39 +1,47 @@
 classdef RequestableURI <handle
-    %UNTITLED5 Summary of this class goes here
-    %   Detailed explanation goes here
-    
+    %RequestableURI
+    %
+    %RequestableURI Properties:
+    %   href - The href for the RequestableURI.
+    %   description - The description of the RequestableURI.
+    %   methods_ - The methods (e.g. GET, POST) available for the Requestable URI. 
+    %
+    %RequestableURI Methods:
+    %   get_json - Make an HTTP GET request to the RequestableURI's href and return the response. 
+    %   post_json - Make an HTTP POST request to the RequestableURI's href and return the result.
+    %
+    %   See also: is_a_task, poll_task.
     properties
-        href
-        description
-        method_s
+        href        %The href for the RequestableURI. (char)
+        description %The description of the RequestableURI. (char)
+        methods_    %The methods (e.g. GET, POST) available for the Requestable URI. (cell)
     end
     
     methods
         function obj = RequestableURI(link)
-            %UNTITLED5 Construct an instance of this class
-            %   Detailed explanation goes here
+            %RequestableURI Construct an instance of this class
+            %   
             obj.href = link.href;
             obj.description = link.description;
-            obj.method_s = link.methods;
+            obj.methods_ = link.methods;
         end
         
         function outputArg = get_json(obj)
+            %get_json Make an HTTP GET request to the RequestableURI's href and return the response.
             options = weboptions('Timeout',60);
             outputArg =  webread(obj.href, options);      
         end
 
-        function outputArg = post_json(obj, varargin)
-            defaultPayload = struct;
-            defaultWaitOnTask = 'auto'; 
-            p = inputParser;
-            p.StructExpand = false;
-            addOptional(p,'payload',defaultPayload, @(s) ischar(s) || isstring(s) || isstruct(s));
-            addOptional(p,'waitOnTask',defaultWaitOnTask,@(s) ischar(s) || isstring(s));
-            parse(p, varargin{:});
-            payload = p.Results.payload;
-            waitOnTask = p.Results.waitOnTask;  
-            
-            if ~any(strcmp(obj.method_s,"POST"))
+        function outputArg = post_json(obj, payload, waitOnTask)
+            %post_json Make an HTTP GET request to the RequestableURI's
+            %href and return the reponse.
+            arguments
+                obj
+                payload struct  = struct;
+                waitOnTask char = 'auto';             
+            end
+                        
+            if ~any(strcmp(obj.methods_,"POST"))
                 error("This URI does not support POST requests");
             end
                 

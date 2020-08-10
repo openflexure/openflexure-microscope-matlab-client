@@ -1,5 +1,6 @@
 function outputArg = poll_task(task)
-    assert(is_a_task(task),'poll_task must be called with a parsed JSON representation of a task');
+    %poll_task Get the status of a task running on the microscope.
+    assert(is_a_task(task),'poll_task must be called with a struct representation of a task');
     while contains(task.status,['running','idle'])
         disp('here');
         options = weboptions('Timeout',30);

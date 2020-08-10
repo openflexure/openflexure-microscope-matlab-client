@@ -7,8 +7,8 @@ classdef OFMClient < handle
     %   extensions.
     %
     %OFMClient Properties:
-    %   host - The microscope's hostname or IP address
-    %   port - The microscope's port
+    %   host - The microscope's hostname or IP address.
+    %   port - The microscope's port.
     %   extensions - A struct of the microscope's currently loaded
     %   extensions.
     %
@@ -28,24 +28,27 @@ classdef OFMClient < handle
     %   calibrate_xy - Move the stage in X and Y to calibrate stage
     %   movements vs camera movements.
     %   autofocus - Run the fast autofocus routine.
+    %
+    %   See also: MicroscopeExtension, is_a_task, poll_task, replace_dots.
     
     properties (SetAccess = protected)
-        host
-        port
-        extensions
+        host        %The microscope's hostname or IP address. (char or string)
+        port        %The microscope's port. (char or string)
+        extensions  %The microscope's currently loaded extensions. (struct of MicroscopeExtension)
     end
     
     methods
-        function obj = OFMClient(varargin)
+        function obj = OFMClient(host, port)
             %OFMClient Construct an instance of this class
             %   
-            defaultPort = '5000';
-            p = inputParser;
-            addRequired(p,'host',@(s) ischar(s) || isstring(s));
-            addOptional(p,'port', defaultPort, @(s) ischar(s) || isstring(s));
-            parse(p, varargin{:});
-            obj.host = p.Results.host;
-            obj.port = p.Results.port;
+            
+            arguments
+                host char
+                port char = '5000'
+            end
+            obj.host = host;
+            obj.port = port;
+
             disp('Connecting to microscope:') 
             fprintf('<a href = "http://%s:%s">%s:%s</a>\n',obj.host,obj.port,obj.host,obj.port);
             obj.populate_extensions()
@@ -66,18 +69,15 @@ classdef OFMClient < handle
             outputArg =  webread(path, options);         
         end
         
-        function outputArg = post_json(obj, path,varargin)
+        function outputArg = post_json(obj, path, payload,waitOnTask)
             %post_json Make an HTTP POST request and return the response.
             %
-            defaultPayload = struct;
-            defaultWaitOnTask = 'auto'; 
-            p = inputParser;
-            p.StructExpand = false;
-            addOptional(p,'payload',defaultPayload, @(s) ischar(s) || isstring(s) || isstruct(s));
-            addOptional(p,'waitOnTask',defaultWaitOnTask,@(s) ischar(s) || isstring(s));
-            parse(p, varargin{:});
-            payload = p.Results.payload;
-            waitOnTask = p.Results.waitOnTask;
+            arguments
+                obj;
+                path char;
+                payload struct  = struct;
+                waitOnTask char = 'auto';             
+            end
 
             if ~startsWith(path,'http')
                 path = [obj.base_uri() path];
@@ -118,14 +118,15 @@ classdef OFMClient < handle
             outputArg = [pos.x, pos.y, pos.z];
         end
         
-        function move(obj,position, varargin)
+        function move(obj,position, absolute)
             %move Move the stage to a given position.
-            defaultAbsolute = true;
-            p = inputParser;
-            addOptional(p,'absolute',defaultAbsolute,@(s) islogical(s));
-            parse(p,varargin{:});
-            absolute = p.Results.absolute;
             
+            arguments
+               obj
+               position
+               absolute logical = true;
+            end    
+           
             if isa(position,'struct')
                 pos = position;
             else
@@ -139,7 +140,6 @@ classdef OFMClient < handle
         
         function move_rel(obj, position)
             %move_rel Move the stage by a given amount.
-            %
             obj.move(position,false);
         end
         
@@ -172,9 +172,9 @@ classdef OFMClient < handle
             outputArg = obj.extensions.org_DOT_openflexure_DOT_camera_stage_mapping.calibrate_xy.post_json();
         end
         
-        function autofocus(obj)
+        function outputArg = autofocus(obj)
             %autofocus Run the fast autofocus routine.
-            obj.extensions.org_DOT_openflexure_DOT_autofocus.fast_autofocus.post_json();
+            outputArg  = obj.extensions.org_DOT_openflexure_DOT_autofocus.fast_autofocus.post_json();
         end    
     end
 end
