@@ -3,9 +3,11 @@ pos = microscope.position_as_matrix;
 starting_pos = pos;
 pos(1) = pos(1) + 100;
 microscope.move(pos);
+disp("Is the microscope in the starting position?");
 disp(isequal(microscope.position_as_matrix,starting_pos));
 pos(1) = pos(1) - 100;
 microscope.move(pos);
+disp("Is the microscope in the starting position?");
 disp(isequal(microscope.position_as_matrix,starting_pos));
 
 %Test the autofocus
