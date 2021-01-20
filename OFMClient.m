@@ -11,6 +11,7 @@ classdef OFMClient < handle
     %   port - The microscope's port.
     %   extensions - A struct of the microscope's currently loaded
     %   extensions.
+    %   cam - The microscope's ipcam object used for preview
     %
     %OFMClient Methods:
     %   base_uri - Return the microscope base URI.
@@ -28,6 +29,9 @@ classdef OFMClient < handle
     %   calibrate_xy - Move the stage in X and Y to calibrate stage
     %   movements vs camera movements.
     %   autofocus - Run the fast autofocus routine.
+    %   record_video - Record a video and optionally save it locally
+    %   preview - Launch a preview window for live video from the
+    %   microscope.
     %
     %   See also: MicroscopeExtension, is_a_task, poll_task, replace_dots_dashes.
     
@@ -209,6 +213,7 @@ classdef OFMClient < handle
         end
         
         function preview(obj)
+            %preview Display a preview live video from the microscope
             obj.cam = ipcam(sprintf('http://%s:%s/api/v2/streams/mjpeg',obj.host,obj.port));
             preview(obj.cam)
         end
