@@ -151,13 +151,11 @@ classdef OFMClient < handle
         end
         
         function outputArg = capture_image(obj)
-            %capture_image Capture an image and return it (TODO)
-            %            
-            
-            %TODO
-            %payload.use_video_port = true;
-            %payload.bayer = false;
-            %outputArg   = obj.post_json('/actions/camera/ram-capture',payload);
+            %capture_image Capture an image and return it 
+            payload.use_video_port = true;
+            payload.bayer = false;
+            headerFields = {'Accept' 'image/jpeg'};
+            outputArg   = obj.post_json('/actions/camera/ram-capture',payload, 'auto', headerFields);
             
         end
         
