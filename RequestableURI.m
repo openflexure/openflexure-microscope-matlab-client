@@ -32,13 +32,14 @@ classdef RequestableURI <handle
             outputArg =  webread(obj.href, options);      
         end
 
-        function outputArg = post_json(obj, payload, waitOnTask)
+        function outputArg = post_json(obj, payload, waitOnTask,headerFields)
             %post_json Make an HTTP GET request to the RequestableURI's
             %href and return the reponse.
             arguments
                 obj
                 payload struct  = struct;
                 waitOnTask char = 'auto';             
+                headerFields cell = {' ' ' '};
             end
                         
             if ~any(strcmp(obj.methods_,"POST"))
@@ -46,7 +47,7 @@ classdef RequestableURI <handle
             end
                 
             
-            options = weboptions('Timeout',60, 'RequestMethod', 'post','HeaderFields',{'Expect' ''});
+            options = weboptions('Timeout',60, 'RequestMethod', 'post','HeaderFields',headerFields);
             r = webwrite(obj.href, payload, options);
             
             if (strcmp(waitOnTask,'auto'))

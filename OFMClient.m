@@ -69,7 +69,7 @@ classdef OFMClient < handle
             outputArg =  webread(path, options);         
         end
         
-        function outputArg = post_json(obj, path, payload,waitOnTask)
+        function outputArg = post_json(obj, path, payload,waitOnTask,headerFields)
             %post_json Make an HTTP POST request and return the response.
             %
             arguments
@@ -77,12 +77,13 @@ classdef OFMClient < handle
                 path char;
                 payload struct  = struct;
                 waitOnTask char = 'auto';             
+                headerFields cell = {' ' ' '};
             end
 
             if ~startsWith(path,'http')
                 path = [obj.base_uri() path];
             end
-            options = weboptions('Timeout',Inf, 'RequestMethod', 'post','HeaderFields',{'Expect' ''});
+            options = weboptions('Timeout',Inf, 'RequestMethod', 'post','HeaderFields',headerFields);
             r = webwrite(path, payload, options);
             
             if (strcmp(waitOnTask,'auto'))
