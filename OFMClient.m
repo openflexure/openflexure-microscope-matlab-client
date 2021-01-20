@@ -35,6 +35,7 @@ classdef OFMClient < handle
         host        %The microscope's hostname or IP address. (char or string)
         port        %The microscope's port. (char or string)
         extensions  %The microscope's currently loaded extensions. (struct of MicroscopeExtension)
+        cam         %The microscope's ipcam object used for preview
     end
     
     methods
@@ -175,6 +176,10 @@ classdef OFMClient < handle
             %autofocus Run the fast autofocus routine.
             outputArg  = obj.extensions.org_DOT_openflexure_DOT_autofocus.fast_autofocus.post_json();
         end    
+        function preview(obj)
+            obj.cam = ipcam(sprintf('http://%s:%s/api/v2/streams/mjpeg',obj.host,obj.port));
+            preview(obj.cam)
+        end
     end
 end
 

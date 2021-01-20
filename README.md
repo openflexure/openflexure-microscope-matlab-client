@@ -61,6 +61,16 @@ disp(microscope.extensions);
 
 This will test the stage movement, run the autofocus routine, show a picture taken by the microscope and list the extensions that are on the microscope.
 
+## See a live video preview
+
+You can view a video preview in MATLAB using
+
+```matlab
+microscope.preview();
+```
+
+This will launch a window with the video preview direct from the microscope.  To use this functionality you will need to install the (IP Camera Support from MATLAB)[https://uk.mathworks.com/hardware-support/ip-camera.html]. MATLAB should prompt you to install this on first use.
+
 ## Basic Commands
 
 The `MicroscopeClient` object has a few basic methods.  If you created an instance of the object with the name `microscope` as above, these are the commands:
