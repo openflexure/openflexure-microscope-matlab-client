@@ -176,6 +176,38 @@ classdef OFMClient < handle
             %autofocus Run the fast autofocus routine.
             outputArg  = obj.extensions.org_DOT_openflexure_DOT_autofocus.fast_autofocus.post_json();
         end    
+        
+        function outputArg = record_video(obj, format, framerate, length, save_locally, save_location)
+            %recordVideo Record a video using the video-extension and
+            %optionally save it locally
+            arguments
+                obj;
+                format char = 'h264';
+                framerate double = 30;
+                length double = 1;
+                save_locally logical = true;
+                save_location char = '';             
+            end
+            payload.video_format = format;
+            payload.video_framerate = framerate;
+            payload.video_length = length;
+            video_filepath = obj.extensions.org_DOT_openflexure_DOT_video_extension.video_api.post_json(payload);
+            [~, name, ext] = fileparts(video_filepath);
+            if save_locally
+                disp('Getting video')
+                video_bytes = obj.extensions.org_DOT_openflexure_DOT_video_extension.get_video_recording.post_json(struct("video_file_location", string(video_filepath)),'auto',{'Accept' 'video/mp4'});
+                disp('Saving video')
+                if ~exist(save_location, 'dir')
+                    mkdir(save_location)
+                end
+                video_filepath = fullfile(save_location,[name ext]);
+                fileID = fopen(video_filepath,'w');
+                fwrite(fileID,video_bytes);
+                fprintf('Saved video to %s',video_filepath);
+            end
+            outputArg = video_filepath;
+        end
+        
         function preview(obj)
             obj.cam = ipcam(sprintf('http://%s:%s/api/v2/streams/mjpeg',obj.host,obj.port));
             preview(obj.cam)
