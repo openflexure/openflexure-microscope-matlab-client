@@ -29,7 +29,7 @@ classdef OFMClient < handle
     %   movements vs camera movements.
     %   autofocus - Run the fast autofocus routine.
     %
-    %   See also: MicroscopeExtension, is_a_task, poll_task, replace_dots.
+    %   See also: MicroscopeExtension, is_a_task, poll_task, replace_dots_dashes.
     
     properties (SetAccess = protected)
         host        %The microscope's hostname or IP address. (char or string)
@@ -102,7 +102,7 @@ classdef OFMClient < handle
             extensions_struct  = obj.get_json('/extensions/');
             for i = 1: numel(extensions_struct)
                 title = extensions_struct(i).title;
-                obj.extensions.(replace_dots(title)) = MicroscopeExtension(extensions_struct(i));
+                obj.extensions.(replace_dots_dashes(title)) = MicroscopeExtension(extensions_struct(i));
             end
         end
         

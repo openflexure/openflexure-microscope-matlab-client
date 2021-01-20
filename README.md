@@ -81,7 +81,7 @@ The `MicroscopeClient` object has a few basic methods.  If you created an instan
 
 To run methods provided by the microscope extensions, you can use the `extensions` `struct` to make `get` or `post` requests.  
 
-**However**, due to MATLAB struct limitation, you need to replace any `.` in your extension name to `_DOT_`. For example, the extension `org.openflexure.autofocus` should be written as `org_DOT_openflexure_DOT_autofocus`.
+**However**, due to MATLAB struct limitation, you need to replace any `.` in your extension name to `_DOT_` and any `-` to `_DASH`. For example, the extension `org.openflexure.autofocus` should be written as `org_DOT_openflexure_DOT_autofocus`.
 
 For a post request, `data` can be a `struct`, `character vector`, `numeric`, `cell` etc. The full list of supported types for post requests is in the [MATLAB documentation](https://uk.mathworks.com/help/matlab/ref/webwrite.html#buocgv5-data), but they have not all been tested.
 
