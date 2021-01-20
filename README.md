@@ -81,7 +81,7 @@ The `MicroscopeClient` object has a few basic methods.  If you created an instan
 |`microscope.position_as_matrix()` | | A `1x3 matrix` of the form `[x y z]`.| The microscope stage's current position. |
 |`microscope.move(position)` | **Either** a `1x3 matrix` of the form `[x y z]` **or** a `struct` with the fields `x`, `y`, `z`. | | Moves the stage to the absolute position. |
 |`microscope.move_rel(position)`| **Either** a `1x3 matrix` of the form `[x y z]` **or** a `struct` with the fields `x`, `y`, `z`. | | Moves the stage relative to the current position.|
-|`microscope.capture_image()` | | | Work in progress|
+|`microscope.capture_image()` | |A `[image_height x image_width x 3] uint8 array`| Takes a non persistant image capture |
 |`microscope.grab_image()` | |A `[image_height x image_width x 3] uint8 array` | Gets the next image the camera sends in its MJPEG preview stream.|
 |`microscope.calibrate_xy()`| | | Untested.|
 |`microscope.autofocus()` | | | Runs the fast autofocus  routine. |
