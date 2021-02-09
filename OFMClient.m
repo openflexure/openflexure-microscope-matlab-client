@@ -207,6 +207,7 @@ classdef OFMClient < handle
                 video_filepath = fullfile(save_location,[name ext]);
                 fileID = fopen(video_filepath,'w');
                 fwrite(fileID,video_bytes);
+                fclose(fileID);
                 fprintf('Saved video to %s',video_filepath);
             end
             outputArg = video_filepath;
