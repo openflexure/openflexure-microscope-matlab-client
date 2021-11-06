@@ -4,7 +4,7 @@ These MATLAB classes make it easy for you to connect and control an OpenFlexure 
 
 ## Installation
 
-The files can be donwloaded from [![View OpenFlexure Microscope MATLAB Client on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://uk.mathworks.com/matlabcentral/fileexchange/86478-openflexure-microscope-matlab-client).
+The files can be downloaded from [![View OpenFlexure Microscope MATLAB Client on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://uk.mathworks.com/matlabcentral/fileexchange/86478-openflexure-microscope-matlab-client).
 
 
 Or you just need to download/clone this repository and make sure the files are added to your MATLAB path.
